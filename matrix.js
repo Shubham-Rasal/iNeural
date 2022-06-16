@@ -39,8 +39,9 @@ class Matrix {
 
     //Multiply two matrices
     static multiply(a, b) {
+        // console.log(a,b)
         if (a.columns !== b.rows)
-            return console.log("The rows of a don't match the columns of b");
+            return console.error("The rows of a don't match the columns of b");
         let result = new Matrix(a.rows, b.columns);
         // result.rows = a.rows;
         // result.columns = b.columns;
@@ -58,11 +59,28 @@ class Matrix {
 
     }
 
+    multiply(k) {
+        if(k instanceof Matrix)
+        {
+
+            for (let i = 0; i < this.rows; i++)
+            for (let j = 0; j < this.columns; j++)
+            this.data[i][j] *= k.data[i][j];
+        }
+        else
+        {
+            for (let i = 0; i < this.rows; i++)
+            for (let j = 0; j < this.columns; j++)
+            this.data[i][j] *= k;
+
+        }
+    }
+
     static subtract(a, b) {
         let result = new Matrix(a.rows, a.columns);
         for (let i = 0; i < result.rows; i++) {
             for (let j = 0; j < result.columns; j++) {
-                result.data[i][j]= a.data[i][j] - b.data[i][j];
+                result.data[i][j] = a.data[i][j] - b.data[i][j];
 
             }
 
@@ -130,8 +148,7 @@ class Matrix {
         }
     }
 
-    static map(a, func)
-    {
+    static map(a, func) {
         let result = new Matrix(a.rows, a.columns);
         for (let i = 0; i < a.rows; i++) {
             for (let j = 0; j < a.columns; j++) {
