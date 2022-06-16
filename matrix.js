@@ -13,7 +13,7 @@ class Matrix {
 
     }
     static fromArray(input_array) {
-        
+
         let inputs = new Matrix(input_array.length, 1);
         for (let index = 0; index < input_array.length; index++) {
             inputs.data[index][0] = input_array[index];
@@ -58,6 +58,20 @@ class Matrix {
 
     }
 
+    static subtract(a, b) {
+        let result = new Matrix(a.rows, a.columns);
+        for (let i = 0; i < result.rows; i++) {
+            for (let j = 0; j < result.columns; j++) {
+                result.data[i][j]= a.data[i][j] - b.data[i][j];
+
+            }
+
+        }
+
+        return result;
+
+    }
+
     //Add two matrices
     add(b) {
         if (b instanceof Matrix) {
@@ -78,13 +92,13 @@ class Matrix {
         }
 
 
-    
+
     }
     //Gerate a random matrix
     randomize() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
-                this.data[i][j] =(Math.random() * 2-1);
+                this.data[i][j] = (Math.random() * 2 - 1);
             }
         }
 
@@ -114,5 +128,16 @@ class Matrix {
                 this.data[i][j] = func(this.data[i][j]);
             }
         }
+    }
+
+    static map(a, func)
+    {
+        let result = new Matrix(a.rows, a.columns);
+        for (let i = 0; i < a.rows; i++) {
+            for (let j = 0; j < a.columns; j++) {
+                result.data[i][j] = func(a.data[i][j]);
+            }
+        }
+        return result;
     }
 }
