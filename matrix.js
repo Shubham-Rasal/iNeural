@@ -1,0 +1,104 @@
+class Matrix{
+    constructor(rows,columns)
+    {
+        this.rows = rows;
+        this.columns = columns;
+        this.data = [];
+
+        for(let i = 0; i < rows; i++)
+        {
+            this.data[i] = [];
+            for(let j = 0; j < columns; j++)
+            {
+                this.data[i][j] = 0;
+            }
+        }
+
+    }
+    //Multiply two matrices
+     static multiply(a,b)
+     { 
+        if(a.columns!==b.rows)
+        return console.log("The rows of a don't match the columns of b");
+            let result = new Matrix();
+            result.rows = a.rows;
+            result.columns = b.columns;
+            result.data = [];
+            for(let i = 0; i < a.rows; i++)
+            {
+                for(let j = 0; j < b.columns; j++)
+                {
+                    let sum = 0;
+                    for(let k = 0; k < a.columns; k++)
+                    {
+                        sum += a.data[i][k] * b.data[k][j];
+                    }
+                    result.data[i][j] = sum;
+                }
+            }
+            return result;
+
+     }
+
+        //Add two matrices
+        add(a,b)
+        {
+            let result = new Matrix();
+            result.rows = a.rows;
+            result.columns = a.columns;
+            result.data = [];
+            for(let i = 0; i < a.rows; i++)
+            {
+                for(let j = 0; j < a.columns; j++)
+                {
+                    result.data[i][j] = a.data[i][j] + b.data[i][j];
+                }
+            }
+            return result;
+        }
+        //Gerate a random matrix
+        randomize()
+        {
+            for(let i = 0; i < this.rows; i++)
+            {
+                for(let j = 0; j < this.columns; j++)
+                {
+                    this.data[i][j] = Math.floor(Math.random() * 10 );
+                }
+            }
+
+        }
+
+        //Transpose a matrix
+       static transpose(a)
+        {
+            let result  = new Matrix(a.columns,a.rows);
+            for(let i = 0; i < a.rows; i++)
+            {
+                for(let j = 0; j < a.columns; j++)
+                {
+                    result.data[j][i] = a.data[i][j];
+                }
+
+        }
+        return result;
+    }
+
+    //Print a matrix
+    print()
+    {
+        console.table(this.data)
+    }
+
+
+    map(func)
+    {
+        for(let i = 0; i < this.rows; i++)
+        {
+            for(let j = 0; j < this.columns; j++)
+            {
+                this.data[i][j] = func(this.data[i][j]);
+            }
+        }
+    }
+}
