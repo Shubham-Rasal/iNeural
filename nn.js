@@ -48,54 +48,57 @@ class NeuralNetwork {
     }
 
     train(input, targets) {
-        // let outputs = this.feedForward(inputs);
         let inputs = Matrix.fromArray(input);
-        // console.table(this.weights_ih.data)
-        // console.table(inputs.data)
         let hiddens = Matrix.multiply(this.weights_ih, inputs);
         hiddens.add(this.bias_ih);
         hiddens.map(sigmoid);
 
         let hiddens_t = Matrix.transpose(hiddens);
-        // console.table(this.weights_ho.data)
-        // console.table(this.weights_ho.data)
-        // console.table(hiddens.data)
+        let inputs_t = Matrix.transpose(inputs);
 
         let outputs = Matrix.multiply(this.weights_ho, hiddens);
         outputs.add(this.bias_ho);
         outputs.map(sigmoid);
-        // console.table(outputs.data);
-        // console.log(outputs.data[0])
 
 
         targets = Matrix.fromArray(targets);
-        // outputs = Matrix.fromArray(outputs);
 
         let output_errors = Matrix.subtract(targets, outputs);
 
         let weights_ho_t = Matrix.transpose(this.weights_ho);
-        // console.table(this.weights_ho.data)
 
 
         let hidden_errors = Matrix.multiply(weights_ho_t, output_errors);
 
 
         let gradient = Matrix.map(outputs, d);
-        // let gradient_t = Matrix.transpose(gradient);
-        // console.log(gradient_t,output_errors)
-        // console.table(gradient.data)
-        // console.table(output_errors.data)
 
         gradient.multiply(output_errors);
         gradient.multiply(this.lr);
 
-        // let weights_ho_deltas = Matrix.multiply(gradient, outputs);
-        //  console.table(outputs.data,"Outputs")
 
 
-         let weights_ho_deltas = Matrix.multiply(gradient, hiddens_t);
 
-         weights_ho_deltas.print();
+        let weights_ho_deltas = Matrix.multiply(gradient, hiddens_t);
+
+        this.weights_ho.add(weights_ho_deltas);
+
+        let hidden_gradient = Matrix.map(hiddens, d);
+
+        hidden_gradient.multiply(hidden_errors);
+        hidden_gradient.multiply(this.lr);
+
+
+        let weights_ih_deltas = Matrix.multiply(hidden_gradient, inputs_t);
+
+
+        this.weights_ih.add(weights_ih_deltas);
+        // adjusting the biases
+        this.bias_ih.add(hidden_gradient);
+        this.bias_ho.add(gradient);
+
+
+
 
 
 
