@@ -1,25 +1,25 @@
-let training_data =[ 
-  {
-    inputs:[1,0],
-    targets:[1]
-  },
-  {
-    inputs:[0,1],
-    targets:[1]
-  },
-  {
-    inputs:[0,0],
-    targets:[0]
-  },
-  {
-    inputs:[1,1],
-    targets:[0]
-  },
+// let training_data =[ 
+//   {
+//     inputs:[1,0],
+//     targets:[1]
+//   },
+//   {
+//     inputs:[0,1],
+//     targets:[1]
+//   },
+//   {
+//     inputs:[0,0],
+//     targets:[0]
+//   },
+//   {
+//     inputs:[1,1],
+//     targets:[0]
+//   },
 
   
   
 
-]
+// ]
 
 const setup = () => {
   let nn = new NeuralNetwork(2, 9, 1);
@@ -37,3 +37,13 @@ const setup = () => {
 
 
 setup();
+
+
+
+//function to print top 50 criketers in india
+function printCricketers()
+{
+  //api call for criketers
+  
+}
+
