@@ -43,7 +43,6 @@ class NeuralNetwork {
         outputs.add(this.bias_ho)
         outputs.map(sigmoid);
 
-
         return outputs.toArray();
     }
 
