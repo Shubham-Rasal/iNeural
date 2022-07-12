@@ -36,12 +36,15 @@ class NeuralNetwork {
     feedForward(input_array) {
         let inputs = Matrix.fromArray(input_array);
 
-        let hiddens = Matrix.multiply(this.weights_ih1, inputs);
-        hiddens.add(this.bias_ih1);
-        hiddens.map(sigmoid);
+        let hiddens_1 = Matrix.multiply(this.weights_ih1, inputs);
+        hiddens_1.add(this.bias_ih1);
+        hiddens_1.map(sigmoid);
+//Second layer
+        let hiddens_2 = Matrix.multiply(this.weights_h1_h2, hiddens_1);
+        hiddens_2.add(this.bias_h1_h2);
+        hiddens_2.map(sigmoid);
 
-
-        let outputs = Matrix.multiply(this.weights_h2_o, hiddens);
+        let outputs = Matrix.multiply(this.weights_h2_o, hiddens_2);
         outputs.add(this.bias_h2_o)
         outputs.map(sigmoid);
 
@@ -50,14 +53,20 @@ class NeuralNetwork {
 
     train(input, targets) {
         let inputs = Matrix.fromArray(input);
-        let hiddens = Matrix.multiply(this.weights_ih1, inputs);
-        hiddens.add(this.bias_ih1);
-        hiddens.map(sigmoid);
 
-        let hiddens_t = Matrix.transpose(hiddens);
+        let hiddens_1 = Matrix.multiply(this.weights_ih1, inputs);
+        hiddens_1.add(this.bias_ih1);
+        hiddens_1.map(sigmoid);
+
+        let hiddens_2 = Matrix.multiply(this.weights_h1_h2, hiddens_1);
+        hiddens_2.add(this.bias_h1_h2);
+        hiddens_2.map(sigmoid);
+
+        let hiddens_1_t = Matrix.transpose(hiddens_1);
+        console.log(hiddens_1_t);
         let inputs_t = Matrix.transpose(inputs);
 
-        let outputs = Matrix.multiply(this.weights_h2_o, hiddens);
+        let outputs = Matrix.multiply(this.weights_h2_o, hiddens_1);
         outputs.add(this.bias_h2_o);
         outputs.map(sigmoid);
 
@@ -80,11 +89,11 @@ class NeuralNetwork {
 
 
 
-        let weights_h2_o_deltas = Matrix.multiply(gradient, hiddens_t);
+        let weights_h2_o_deltas = Matrix.multiply(gradient, hiddens_1_t);
 
         this.weights_h2_o.add(weights_h2_o_deltas);
 
-        let hidden_gradient = Matrix.map(hiddens, d);
+        let hidden_gradient = Matrix.map(hiddens_1, d);
 
         hidden_gradient.multiply(hidden_errors);
         hidden_gradient.multiply(this.lr);
