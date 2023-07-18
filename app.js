@@ -1,10 +1,6 @@
 let training_data =[ 
   {
     inputs:[1,1],
-    targets:[0]
-  },
-  {
-    inputs:[0,1],
     targets:[1]
   },
   {
@@ -12,24 +8,26 @@ let training_data =[
     targets:[0]
   },
   {
+    inputs:[0,1],
+    targets:[0]
+  },
+  {
     inputs:[1,0],
-    targets:[1]
+    targets:[0]
   },
 
 ]
 
-let nn = new NeuralNetwork(2, 80, 1);
-const setup = () => {
-  
+let nn = new NeuralNetwork(2, 100, 1);
+const setup = () => { 
 
-
- for (let i = 0; i<1000; i++)
+ for (let i = 0; i<10000; i++)
  {
   let data = (training_data[Math.floor(Math.random()*4)]);
-
   nn.train(data.inputs,data.targets);
  }
- console.log(Math.round(nn.feedForward([1,0])));
+ console.table(training_data)
+ console.log(Math.round(nn.feedForward([0,0])));
 
 }
 
