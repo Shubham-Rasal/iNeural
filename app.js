@@ -18,20 +18,29 @@ let training_data =[
 
 ]
 
+let nn = new NeuralNetwork(2, 80, 1);
 const setup = () => {
-  let nn = new NeuralNetwork(2, 3, 1);
   
 
- for (let i = 0; i<10000; i++)
+
+ for (let i = 0; i<1000; i++)
  {
   let data = (training_data[Math.floor(Math.random()*4)]);
+
   nn.train(data.inputs,data.targets);
  }
- console.table(nn.feedForward([0,1]));
- document.write(nn.feedForward([1,0]))
+ console.log(Math.round(nn.feedForward([1,0])));
+
 }
 
 
-setup();
+
+
+const btn = document.createElement('button');
+btn.innerText = 'Click Me';
+btn.addEventListener('click', setup);
+document.body.appendChild(btn);
+
+
 
 
