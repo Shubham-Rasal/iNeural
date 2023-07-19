@@ -1,3 +1,5 @@
+const Matrix = require('./matrix.js');
+
 function sigmoid(x) {
     return 1 / (1 + Math.exp(-x));
 
@@ -117,5 +119,7 @@ class NeuralNetwork {
 
     }
 
-
 }
+
+module.exports = NeuralNetwork;
+// export default NeuralNetwork;

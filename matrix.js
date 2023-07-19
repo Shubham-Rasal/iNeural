@@ -158,3 +158,6 @@ class Matrix {
         return result;
     }
 }
+
+module.exports = Matrix;
+// export default Matrix;
